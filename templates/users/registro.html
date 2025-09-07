@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Registro - Club Crocan{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg border-0 rounded-3" style="max-width: 500px; width: 100%;">
+        <div class="card-body p-4">
+            <h2 class="text-center mb-4">Crear Cuenta</h2>
+            
+            <!-- Errores generales (ej: contraseñas no coinciden) -->
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- DNI -->
+                <div class="mb-3">
+                    <label for="id_dni" class="form-label">DNI</label>
+                    {{ form.dni }}
+                    {% if form.dni.errors %}
+                        <div class="text-danger small">{{ form.dni.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Nombre -->
+                <div class="mb-3">
+                    <label for="id_nombre" class="form-label">Nombre</label>
+                    {{ form.nombre }}
+                    {% if form.nombre.errors %}
+                        <div class="text-danger small">{{ form.nombre.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Apellido -->
+                <div class="mb-3">
+                    <label for="id_apellido" class="form-label">Apellido</label>
+                    {{ form.apellido }}
+                    {% if form.apellido.errors %}
+                        <div class="text-danger small">{{ form.apellido.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Fecha nacimiento -->
+                <div class="mb-3">
+                    <label for="id_fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                    {{ form.fecha_nacimiento }}
+                    {% if form.fecha_nacimiento.errors %}
+                        <div class="text-danger small">{{ form.fecha_nacimiento.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Sexo -->
+                <div class="mb-3">
+                    <label for="id_sexo" class="form-label">Sexo</label>
+                    {{ form.sexo }}
+                    {% if form.sexo.errors %}
+                        <div class="text-danger small">{{ form.sexo.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="id_email" class="form-label">Correo Electrónico</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="text-danger small">{{ form.email.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Contraseña -->
+                <div class="mb-3">
+                    <label for="id_password" class="form-label">Contraseña</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <div class="text-danger small">{{ form.password.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Confirmar contraseña -->
+                <div class="mb-3">
+                    <label for="id_confirmar_password" class="form-label">Confirmar Contraseña</label>
+                    {{ form.confirmar_password }}
+                    {% if form.confirmar_password.errors %}
+                        <div class="text-danger small">{{ form.confirmar_password.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Botón -->
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-success">Registrarse</button>
+                </div>
+            </form>
+
+            <p class="text-center mt-3">
+                ¿Ya tienes cuenta? <a href="{% url 'users_app:login' %}">Inicia sesión</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
