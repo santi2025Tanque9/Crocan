@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Crocan - Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>🏆 Club Crocan</h1>
+            {% if customer_data %}
+            <div class="text-end">
+                <p class="mb-0"><strong>Hola, {{ customer_data.name }}</strong></p>
+                <p class="mb-0 text-success">{{ customer_data.points }} puntos</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Categorías -->
+        <div class="mb-4">
+            <h3>Categorías</h3>
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="{% url 'products:product_list' %}" class="btn btn-outline-primary">Todas</a>
+                {% for category in categories %}
+                <a href="{% url 'products:product_list_by_category' category.id %}" 
+                   class="btn btn-outline-primary {% if current_category.id == category.id %}active{% endif %}">
+                    {{ category.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Productos -->
+        <h3>Productos Disponibles</h3>
+        
+        {% if products %}
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <span class="text-muted">Sin imagen</span>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h5 text-primary mb-0">${{ product.price }}</span>
+                                <span class="badge bg-warning text-dark">{{ product.points }} pts</span>
+                            </div>
+                            <small class="text-muted">Categoría: {{ product.category.name }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <h4>No hay productos en esta categoría</h4>
+                <p>Selecciona otra categoría o crea productos en el admin.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

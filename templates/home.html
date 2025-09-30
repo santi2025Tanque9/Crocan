@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Bienvenido{% endblock %}
+{% block content %}
+<div class="text-center mt-5">
+    <h1>Bienvenido a Club Crocan</h1>
+</div>
+
+<!-- NAV TABS -->
+    <ul class="nav nav-tabs justify-content-center mt-5" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="promos-tab" data-bs-toggle="tab" data-bs-target="#promos" type="button" role="tab">
+                Promociones
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="historial-tab" data-bs-toggle="tab" data-bs-target="#historial" type="button" role="tab">
+                Historial de Transacciones
+            </button>
+        </li>
+    </ul>
+<!-- Promociones disponibles -->
+<div class="bg-white p-4 rounded shadow-sm mt-4">
+    <h4>Promociones disponibles</h4>
+    <div class="row mt-3">
+        <!-- Promo 1 -->
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=500" class="card-img-top" alt="Promo 2x1 Crocan Burger">
+                <div class="card-body text-center">
+                    <h5 class="card-title">2x1 en Crocan Burger</h5>
+                    <p class="card-text">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el siglo XVI, cuando un impresor (anónimo) usó una galera de tipos y los mezcló para crear un libro de muestras tipográficas. Ha sobrevivido no solo cinco siglos, sino también la transición a la composición</p>
+                    <span class="badge bg-success">Disponible</span>
+                </div>
+                
+            </div>
+        </div>
+        <!-- Promo 2 -->
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=500" class="card-img-top" alt="Promo descuento lunes">
+                <div class="card-body text-center">
+                    <h5 class="card-title">10% de descuento</h5>
+                    <p class="card-text">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el siglo XVI, cuando un impresor (anónimo) usó una galera de tipos y los mezcló para crear un libro de muestras tipográficas. Ha sobrevivido no solo cinco siglos, sino también la transición a la composición</p>
+                    <span class="badge bg-warning text-dark">Limitado</span>
+                </div>
+                
+            </div>
+        </div>
+        <!-- Promo 3 -->
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=500" class="card-img-top" alt="Promo puntos Crocan">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Crocan Points</h5>
+                    <p class="card-text">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el siglo XVI, cuando un impresor (anónimo) usó una galera de tipos y los mezcló para crear un libro de muestras tipográficas. Ha sobrevivido no solo cinco siglos, sino también la transición a la composición</p>
+                    <span class="badge bg-info">Nuevo</span>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h3 class="mb-4">Historial de Transacciones</h3>
+
+    <div class="card shadow-sm rounded-4">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Moneda</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaccion in transacciones %}
+                    <tr>
+                        <td>{{ transaccion.id }}</td>
+                        <td>{{ transaccion.tipo }}</td>
+                        <td>
+                            <img src="#" alt="Moneda" width="20" class="me-2">
+                            {{ transaccion.moneda }}
+                        </td>
+                        <td>{{ transaccion.fecha|date:"d/m/Y" }}</td>
+                        <td>{{ transaccion.monto }}</td>
+                        <td>
+                            {% if transaccion.estado == "Confirmada" %}
+                                <span class="badge bg-success">{{ transaccion.estado }}</span>
+                            {% elif transaccion.estado == "Pendiente" %}
+                                <span class="badge bg-warning text-dark">{{ transaccion.estado }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ transaccion.estado }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">No tienes transacciones registradas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

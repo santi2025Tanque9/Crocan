@@ -4,10 +4,7 @@ from .managers import UsuarioManager
 # Create your models here.
 
 
-
-
-
-class Usuario (AbstractBaseUser,PermissionsMixin):
+class Usuario(AbstractBaseUser, PermissionsMixin):
     SEXO_CHOICES = (
         ('M', 'Masculino'),
         ('F', 'Femenino'),
@@ -20,6 +17,8 @@ class Usuario (AbstractBaseUser,PermissionsMixin):
     fecha_nacimiento = models.DateField()
     sexo = models.CharField(max_length=1, choices=SEXO_CHOICES)
     email = models.EmailField(unique=True)
+    puntos = models.IntegerField(default=0)  # NUEVO CAMPO
+    telefono = models.CharField(max_length=20, blank=True, null=True)  # Opcional
     
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -30,4 +29,7 @@ class Usuario (AbstractBaseUser,PermissionsMixin):
     REQUIRED_FIELDS = ['nombre', 'apellido', 'fecha_nacimiento', 'sexo', 'email']
     
     def __str__(self):
+        return f"{self.nombre} {self.apellido}"
+    
+    def get_full_name(self):
         return f"{self.nombre} {self.apellido}"

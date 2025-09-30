@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #Apps local
-    'applications.users'
+    'applications.products',  # Agregar esta línea
+    'applications.users',
 ]
+AUTH_USER_MODEL = 'users.Usuario'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -118,6 +120,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.Usuario'
 
+#BDD
 
 
 
