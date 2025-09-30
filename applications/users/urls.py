@@ -7,10 +7,10 @@ from django.urls import reverse_lazy
 app_name = 'users_app'
 
 urlpatterns = [
-    path('', views.login_view, name='login'),
+    path('login/', views.login_view, name='login'),
     path('registro/', views.registro, name='registro'),
     path('logout/', views.logout_view, name='logout'),
-    path('home/', views.home, name='home'),
+
     # --- Recuperación de contraseña ---
     
     

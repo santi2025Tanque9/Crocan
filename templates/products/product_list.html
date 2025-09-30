@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Productos{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Sidebar con categorías -->
+    <div class="col-md-3">
+        <div class="category-sidebar">
+            <h4 class="mb-4">
+                <i class="fas fa-list me-2"></i>Categorías
+            </h4>
+            <div class="list-group">
+                {% for category in categories %}
+                    <a href="{% url 'products:product_list_by_category' category.id %}" 
+                       class="list-group-item list-group-item-action {% if current_category.id == category.id %}active{% endif %}">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Información del cliente -->
+        {% if customer_data %}
+        <div class="customer-card mt-4 p-3">
+            <h5 class="mb-3">
+                <i class="fas fa-user me-2"></i>Mi Perfil
+            </h5>
+            <p class="mb-1"><strong>Nombre:</strong> {{ customer_data.name }}</p>
+            <p class="mb-1"><strong>DNI:</strong> {{ customer_data.dni }}</p>
+            <p class="mb-0">
+                <strong>Puntos:</strong> 
+                <span class="points-badge ms-2">{{ customer_data.points }}</span>
+            </p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Lista de productos -->
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i class="fas fa-store me-2"></i>
+                {{ current_category.name }}
+            </h2>
+            <span class="badge badge-primary">{{ products|length }} productos</span>
+        </div>
+
+        {% if products %}
+            <div class="row">
+                {% for product in products %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card card-product h-100">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                            <i class="fas fa-image fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text text-muted flex-grow-1">{{ product.description|truncatewords:15 }}</p>
+                            
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 text-primary mb-0">${{ product.price }}</span>
+                                    {% if product.points > 0 %}
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fas fa-star me-1"></i>{{ product.points }} pts
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+                <h3 class="text-muted">No hay productos en esta categoría</h3>
+                <p class="text-muted">Prueba con otra categoría</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
