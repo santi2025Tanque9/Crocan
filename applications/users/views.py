@@ -38,3 +38,7 @@ def home(request):
 def logout_view(request):
     logout(request)
     return redirect('users_app:login')
+
+def home(request):
+    # Cambiar para que redirija al home en lugar de a productos
+    return render(request, 'home.html')
