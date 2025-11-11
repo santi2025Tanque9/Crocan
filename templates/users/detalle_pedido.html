@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- ENCABEZADO -->
+    <div class="pedido-header d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Detalle del Pedido</h2>
+            <p class="text-secondary mb-0">{{ pedido.created_at|date:"d/m/Y H:i" }}</p>
+        </div>
+        <a href="{% url 'users_app:historial_pedidos' %}" class="btn btn-light border">
+            <i class="fas fa-arrow-left me-2"></i> Volver al historial
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                    <h5 class="mb-0"><i class="fas fa-shopping-bag me-2 text-primary"></i>Productos de la Compra</h5>
+                    
+                </div>
+                <div class="card-body">
+                    {% for item in items_pedido %}
+                    <div class="pedido-item d-flex align-items-center mb-4 pb-3 border-bottom">
+                        <!-- Imagen -->
+                        <div class="producto-imagen me-3">
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="rounded">
+                            {% else %}
+                                <div class="no-img d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-image text-muted"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Info producto -->
+                        <div class="flex-grow-1">
+                            <h6 class="fw-semibold mb-1">{{ item.product.name }}</h6>
+                            <p class="text-muted mb-1">${{ item.price }} c/u</p>
+                            {% if item.note %}
+                            <p class="small text-muted mb-0"><i class="fas fa-sticky-note me-1"></i>{{ item.note }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Subtotal -->
+                        <div class="text-end">
+                            <p class="mb-1 fw-bold">x{{ item.quantity }}</p>
+                            <p class="text-success fw-bold mb-0">${{ item.get_subtotal }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <!-- Total -->
+                    <div class="d-flex justify-content-between align-items-center pt-3 mt-3 border-top">
+                        <h5 class="mb-0">Total del pedido:</h5>
+                        <h4 class="text-success mb-0 fw-bold">${{ pedido.total }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div class="col-lg-4">
+            <!-- Info del Pedido -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-info-circle text-primary me-2"></i>Información del Pedido</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2"><small class="text-muted d-block">Fecha</small><strong>{{ pedido.created_at|date:"d/m/Y" }}</strong></p>
+                    <p class="mb-0"><small class="text-muted d-block">Hora</small><strong>{{ pedido.created_at|date:"H:i" }} hs</strong></p>
+                </div>
+            </div>
+
+            <!-- Puntos -->
+            <div class="card shadow-sm border-0 mb-4 text-center">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-star text-warning me-2"></i>Puntos Obtenidos</h5>
+                </div>
+                <div class="card-body">
+                    <div class="display-5 fw-bold text-warning mb-2">+{{ pedido.points_earned }}</div>
+                    <p class="text-muted mb-0">puntos en esta compra</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ayuda -->
+    <div class="alert alert-light border mt-5 shadow-sm">
+        <div class="d-flex">
+            <div class="me-3 align-self-center">
+                <i class="fas fa-question-circle text-primary fa-lg"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-1">¿Necesitas ayuda con este pedido?</h6>
+                <p class="mb-0 text-muted">Si tienes alguna pregunta sobre este pedido, no dudes en contactar a nuestro equipo de atención al cliente.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos personalizados -->
+<style>
+.pedido-header h2 {
+    font-size: 1.8rem;
+    letter-spacing: -0.5px;
+}
+
+.pedido-item:last-child {
+    border-bottom: none !important;
+}
+
+.producto-imagen img, 
+.producto-imagen .no-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    object-fit: cover;
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.card-header h5 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.badge {
+    font-size: 0.8rem;
+    padding: 0.45em 0.7em;
+    border-radius: 8px;
+}
+
+.alert {
+    border-radius: 10px;
+}
+
+.text-muted {
+    font-size: 0.9rem;
+}
+</style>
+{% endblock %}
+

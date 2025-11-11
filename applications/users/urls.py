@@ -11,7 +11,10 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('registro/', views.registro, name='registro'),
     path('logout/', views.logout_view, name='logout'),
-
+    # Nuevas URLs para historial
+    path('historial-pedidos/', views.historial_pedidos, name='historial_pedidos'),
+    #path('detalle-pedido/<int:pedido_id>/', views.detalle_pedido, name='detalle_pedido'),
+    path('detalle-pedido/<int:pedido_id>/', views.detalle_pedido, name='detalle_pedido'),
     # --- Recuperación de contraseña ---
     
     
