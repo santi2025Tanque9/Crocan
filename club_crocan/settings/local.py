@@ -29,6 +29,7 @@ STATIC_URL = 'static/'
 
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
 # Para que Django sepa dónde guardar los archivos subidos y cómo servirlos, debes agregar dos configuraciones clave en tu archivo settings.py
 MEDIA_URL = '/media/' #Es la URL base que se utilizará para acceder a estos archivos desde el navegador
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #Es la ruta absoluta en tu sistema de archivos donde se almacenarán los archivos subidos.

@@ -37,10 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    #Apps local
+    'django.contrib.staticfiles', #Apps local
     'applications.products',  # Agregar esta línea
     'applications.users',
+    'applications.historial_pedidos',
 ]
 AUTH_USER_MODEL = 'users.Usuario'
 

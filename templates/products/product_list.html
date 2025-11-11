@@ -1,93 +1,200 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Productos{% endblock %}
+{% block title %}Menú - Club Crocan{% endblock %}
 
 {% block content %}
-<div class="row">
-    <!-- Sidebar con categorías -->
-    <div class="col-md-3">
-        <div class="category-sidebar">
-            <h4 class="mb-4">
-                <i class="fas fa-list me-2"></i>Categorías
-            </h4>
-            <div class="list-group">
-                {% for category in categories %}
-                    <a href="{% url 'products:product_list_by_category' category.id %}" 
-                       class="list-group-item list-group-item-action {% if current_category.id == category.id %}active{% endif %}">
-                        {{ category.name }}
-                    </a>
-                {% endfor %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar con categorías -->
+        <div class="col-md-3 col-lg-2 d-md-block sidebar-custom">
+            <div class="position-sticky pt-3">
+                <!-- Información del cliente -->
+                {% if customer_data %}
+                <div class="customer-card p-3 mb-4">
+                    <h5 class="mb-3">
+                        <i class="fas fa-user me-2"></i>Mi Perfil
+                    </h5>
+                    <p class="mb-1"><strong>Nombre:</strong> {{ customer_data.name }}</p>
+                    <p class="mb-1"><strong>DNI:</strong> {{ customer_data.dni }}</p>
+                    <p class="mb-0">
+                        <strong>Puntos:</strong> 
+                        <span class="points-badge ms-2">{{ customer_data.points }}</span>
+                    </p>
+                </div>
+                {% endif %}
+
+                <div class="category-sidebar">
+                    <h4 class="mb-4 text-center">
+                        <i class="fas fa-list me-2"></i>Categorías
+                    </h4>
+                    <div class="list-group">
+                        {% for category in categories %}
+                            <a href="{% url 'products:product_list_by_category' category.id %}" 
+                               class="list-group-item list-group-item-action {% if current_category.id == category.id %}active{% endif %}">
+                                <i class="fas fa-utensils me-2"></i>{{ category.name }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Información del cliente -->
-        {% if customer_data %}
-        <div class="customer-card mt-4 p-3">
-            <h5 class="mb-3">
-                <i class="fas fa-user me-2"></i>Mi Perfil
-            </h5>
-            <p class="mb-1"><strong>Nombre:</strong> {{ customer_data.name }}</p>
-            <p class="mb-1"><strong>DNI:</strong> {{ customer_data.dni }}</p>
-            <p class="mb-0">
-                <strong>Puntos:</strong> 
-                <span class="points-badge ms-2">{{ customer_data.points }}</span>
-            </p>
-        </div>
-        {% endif %}
-    </div>
+        <!-- Lista de productos -->
+        <div class="col-md-9 col-lg-10 ms-sm-auto px-4">
+            <!-- Header de la categoría -->
+            <div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+                <div>
+                    <h1 class="h2 fw-bold text-primary">
+                        <i class="fas fa-utensils me-2"></i>{{ current_category.name }}
+                    </h1>
+                    <p class="text-muted mb-0">{{ products|length }} productos disponibles</p>
+                </div>
+                <div class="d-none d-md-block">
+                    <span class="badge bg-primary fs-6">{{ products|length }} productos</span>
+                </div>
+            </div>
 
-    <!-- Lista de productos -->
-    <div class="col-md-9">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>
-                <i class="fas fa-store me-2"></i>
-                {{ current_category.name }}
-            </h2>
-            <span class="badge badge-primary">{{ products|length }} productos</span>
-        </div>
-
-        {% if products %}
-            <div class="row">
-                {% for product in products %}
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card card-product h-100">
-                        {% if product.image %}
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
-                        {% else %}
-                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
-                            <i class="fas fa-image fa-3x text-muted"></i>
-                        </div>
-                        {% endif %}
-                        
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text text-muted flex-grow-1">{{ product.description|truncatewords:15 }}</p>
+            {% if products %}
+                <div class="row g-4">
+                    {% for product in products %}
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="card product-card h-100 border-0 shadow-sm">
+                            {% if product.image %}
+                            <div class="product-image-container">
+                                <img src="{{ product.image.url }}" class="card-img-top product-image" alt="{{ product.name }}">
+                            </div>
+                            {% else %}
+                            <div class="product-image-placeholder">
+                                <i class="fas fa-utensils fa-4x text-muted"></i>
+                            </div>
+                            {% endif %}
                             
-                            <div class="mt-auto">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="h5 text-primary mb-0">${{ product.price }}</span>
+                            <div class="card-body d-flex flex-column p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold mb-0">{{ product.name }}</h5>
                                     {% if product.points > 0 %}
-                                    <span class="badge bg-warning text-dark">
+                                    <span class="badge bg-warning text-dark fs-6">
                                         <i class="fas fa-star me-1"></i>{{ product.points }} pts
                                     </span>
                                     {% endif %}
                                 </div>
                                 
+                                <p class="card-text text-muted flex-grow-1 mb-3">{{ product.description }}</p>
                                 
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="h4 text-primary fw-bold mb-0">${{ product.price }}</span>
+                                        <span class="text-muted">Precio</span>
+                                    </div>
+                                    
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="text-center py-5">
-                <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
-                <h3 class="text-muted">No hay productos en esta categoría</h3>
-                <p class="text-muted">Prueba con otra categoría</p>
-            </div>
-        {% endif %}
+            {% else %}
+                <div class="text-center py-5">
+                    <div class="empty-state">
+                        <i class="fas fa-box-open fa-4x text-muted mb-4"></i>
+                        <h3 class="text-muted">No hay productos en esta categoría</h3>
+                        <p class="text-muted mb-4">Prueba seleccionando otra categoría del menú</p>
+                        <a href="{% url 'products:product_list' %}" class="btn btn-primary">
+                            <i class="fas fa-list me-2"></i>Ver todas las categorías
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </div>
+
+<style>
+    .sidebar-custom {
+        background-color: #f8f9fa;
+        min-height: calc(100vh - 76px);
+        border-right: 1px solid #dee2e6;
+    }
+    
+    .product-card {
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(198, 12, 48, 0.15);
+    }
+    
+    .product-image-container {
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .product-image {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .product-card:hover .product-image {
+        transform: scale(1.05);
+    }
+    
+    .product-image-placeholder {
+        height: 200px;
+        background-color: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .category-sidebar {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .list-group-item {
+        border: none;
+        border-radius: 8px !important;
+        margin-bottom: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .list-group-item:hover {
+        background-color: var(--primary-red);
+        color: white;
+        transform: translateX(5px);
+    }
+    
+    .list-group-item.active {
+        background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
+        border: none;
+        transform: translateX(5px);
+    }
+    
+    .empty-state {
+        padding: 60px 20px;
+    }
+    
+    @media (max-width: 768px) {
+        .sidebar-custom {
+            min-height: auto;
+            border-right: none;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .customer-card {
+            margin-bottom: 20px;
+        }
+    }
+</style>
 {% endblock %}

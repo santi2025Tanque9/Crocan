@@ -10,120 +10,336 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <style>
-        .navbar-custom {
-            background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+    :root {
+        --primary-red: #c60c30;
+        --primary-red-dark: #a50927;
+        --secondary-yellow: #ffc107;
+        --secondary-yellow-dark: #e0a800;
+        --font-family: 'Montserrat', sans-serif;
+        --transition-speed: 0.3s;
+        --shadow-light: rgba(0, 0, 0, 0.1);
+        --shadow-strong: rgba(198, 12, 48, 0.15);
+    }
+
+    body {
+        font-family: var(--font-family);
+        background-color: #fff;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .navbar-custom {
+        background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
+        box-shadow: 0 4px 8px var(--shadow-light);
+    }
+
+    .navbar-brand, .nav-link, .navbar-text, .user-name {
+        color: white !important;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        font-weight: 600;
+        letter-spacing: 0.03em;
+    }
+
+    .nav-link:hover {
+        color: var(--secondary-yellow) !important;
+        transform: translateY(-2px);
+        transition: all var(--transition-speed) ease;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-red);
+        border-color: var(--primary-red);
+        font-weight: 600;
+        box-shadow: 0 4px 8px var(--shadow-strong);
+        transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--primary-red-dark);
+        border-color: var(--primary-red-dark);
+        box-shadow: 0 6px 15px var(--shadow-strong);
+    }
+
+    .btn-warning {
+        background-color: var(--secondary-yellow);
+        border-color: var(--secondary-yellow);
+        color: #000;
+        font-weight: 600;
+        box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+        transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .btn-warning:hover {
+        background-color: var(--secondary-yellow-dark);
+        border-color: var(--secondary-yellow-dark);
+        box-shadow: 0 6px 15px rgba(224, 168, 0, 0.4);
+    }
+
+    .btn-outline-light {
+        border-width: 2px;
+        font-weight: 600;
+        transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    .btn-outline-light:hover {
+        background-color: var(--secondary-yellow);
+        border-color: var(--secondary-yellow);
+        color: #000 !important;
+        box-shadow: 0 6px 15px rgba(255, 193, 7, 0.4);
+    }
+
+    .card-product {
+        transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        height: 100%;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        background-color: #fff;
+    }
+
+    .card-product:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px var(--shadow-strong);
+    }
+
+    .category-sidebar {
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        padding: 25px 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .customer-card {
+        background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
+        color: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 8px 20px var(--shadow-strong);
+    }
+
+    .points-badge {
+        background-color: var(--primary-red);
+        color: white;
+        padding: 6px 14px;
+        border-radius: 25px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        box-shadow: 0 2px 8px rgba(198, 12, 48, 0.3);
+    }
+
+    .badge-primary {
+        background-color: var(--primary-red);
+    }
+
+    .list-group-item.active {
+        background-color: var(--primary-red);
+        border-color: var(--primary-red);
+    }
+
+    .text-primary {
+        color: var(--primary-red) !important;
+    }
+
+    .user-points {
+        background-color: var(--secondary-yellow);
+        color: #000 !important;
+        padding: 6px 16px;
+        border-radius: 25px;
+        margin-left: 12px;
+        font-size: 1em;
+        font-weight: 700;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        color: white !important;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .hero-section {
+        background: linear-gradient(rgba(198, 12, 48, 0.85), rgba(165, 9, 39, 0.85)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 110px 0 90px;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .hero-section h1 {
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .hero-section p.lead {
+        font-size: 1.3rem;
+        font-weight: 500;
+        margin-bottom: 1.8rem;
+    }
+
+    .feature-card {
+        transition: all var(--transition-speed) ease;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        background-color: #fff;
+        padding: 30px 20px;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 14px 30px rgba(198, 12, 48, 0.15);
+    }
+
+    .feature-icon i {
+        color: var(--primary-red);
+        transition: color var(--transition-speed);
+    }
+
+    .feature-card:hover .feature-icon i {
+        color: var(--primary-red-dark);
+    }
+
+    .points-display {
+        background-color: var(--primary-red);
+        color: white;
+        padding: 50px 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(198, 12, 48, 0.25);
+        transition: background-color var(--transition-speed);
+    }
+
+    .points-display:hover {
+        background-color: var(--primary-red-dark);
+    }
+
+    .points-display i {
+        margin-bottom: 20px;
+        color: #fff;
+        filter: drop-shadow(0 0 3px rgba(255,255,255,0.7));
+    }
+
+    footer.bg-dark {
+        box-shadow: inset 0 10px 20px rgba(0,0,0,0.5);
+    }
+
+    footer h5 {
+        font-weight: 700;
+        letter-spacing: 0.05em;
+    }
+
+    footer p {
+        font-size: 0.9rem;
+        color: #ddd;
+    }
+    .border-danger {
+    border-left: 4px solid #dc3545 !important;
+}
+
+/* Opcional: Si quieres un rojo más específico */
+
+    /* Responsive tweaks */
+    @media (max-width: 767.98px) {
+        .hero-section {
+            padding: 80px 15px 60px;
         }
-        .navbar-brand, .nav-link, .navbar-text {
-            color: white !important;
+        .hero-section h1 {
+            font-size: 2.5rem;
         }
-        .nav-link:hover {
-            color: #ffeb3b !important;
+        .hero-section p.lead {
+            font-size: 1.1rem;
         }
-        .btn-primary {
-            background-color: #d32f2f;
-            border-color: #d32f2f;
+        .btn-lg {
+            font-size: 1.1rem;
+            padding: 0.75rem 2rem;
         }
-        .btn-primary:hover {
-            background-color: #b71c1c;
-            border-color: #b71c1c;
-        }
-        .card-product {
-            transition: transform 0.3s;
-            height: 100%;
-            border: 1px solid #e0e0e0;
-        }
-        .card-product:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(198, 40, 40, 0.15);
-        }
-        .category-sidebar {
-            background-color: #f5f5f5;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        .customer-card {
-            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
-            color: white;
-            border-radius: 15px;
-        }
-        .points-badge {
-            background-color: #ff5252;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-        .badge-primary {
-            background-color: #d32f2f;
-        }
-        .list-group-item.active {
-            background-color: #d32f2f;
-            border-color: #d32f2f;
-        }
-        .text-primary {
-            color: #d32f2f !important;
-        }
-        .user-points {
-            background-color: #ffc107;
-            color: #000 !important;
-            padding: 5px 12px;
-            border-radius: 20px;
-            margin-left: 10px;
-            font-size: 0.9em;
-            font-weight: bold;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        .user-info {
-            display: flex;
-            align-items: center;
-            color: white !important;
-        }
-        .user-name {
-            color: white !important;
-            font-weight: 500;
-        }
-    </style>
+    }
+</style>
+
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <!-- Navbar Rediseñado -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'products:product_list' %}">
-                <i class="fas fa-shopping-bag me-2"></i>Club Crocan
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold" href="{% url 'users_app:home' %}">
+                <i class="fas fa-utensils me-2"></i>Club Crocan
             </a>
             
-            <div class="navbar-nav ms-auto">
-                {% if user.is_authenticated %}
-                    <div class="d-flex align-items-center">
-                        <div class="user-info me-3">
-                            <span class="user-name">
+            <!-- Botón Hamburguesa -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Contenido del Navbar -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <div class="navbar-nav ms-auto align-items-center">
+
+                        <a class="nav-link me-3" href="{% url 'products:product_list' %}">
+                            <i class="fas fa-store me-1"></i>Productos
+                        </a>
+                    {% if user.is_authenticated %}
+                        <!-- Enlace a Productos -->
+                        
+                        
+                        <!-- Mis Pedidos -->
+                        <a class="nav-link me-3" href="{% url 'users_app:historial_pedidos' %}">
+                            <i class="fas fa-history me-1"></i>Mis Pedidos
+                        </a>
+                        
+                        <!-- Información del Usuario -->
+                        <div class="d-flex align-items-center me-3">
+                            <span class="user-name me-3">
                                 <i class="fas fa-user me-1"></i>Hola, {{ user.nombre }}
                             </span>
-                            {% if user.puntos %}
-                                <span class="user-points">
-                                    <i class="fas fa-star me-1"></i>{{ user.puntos }} pts
-                                </span>
-                            {% endif %}
+                            <span class="user-points">
+                                <i class="fas fa-star me-1"></i>{{ user.puntos }} pts
+                            </span>
                         </div>
-                        <a class="nav-link" href="{% url 'users_app:logout' %}">
+                        
+                        <!-- Cerrar Sesión -->
+                        <a class="nav-link btn btn-outline-light btn-sm" href="{% url 'users_app:logout' %}">
                             <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
                         </a>
-                    </div>
-                {% else %}
-                    <a class="nav-link" href="{% url 'users_app:login' %}">
-                        <i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión
-                    </a>
-                {% endif %}
+                    {% else %}
+                        <!-- Para usuarios no autenticados -->
+                        <a class="nav-link" href="{% url 'users_app:login' %}">
+                            <i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="container mt-4">
+    <main class="min-vh-100 bg-light">
         {% block content %}
         {% endblock %}
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-utensils me-2"></i>Club Crocan</h5>
+                    <p class="mb-0">Los mejores sabores para los mejores momentos</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">&copy; 2024 Club Crocan. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
